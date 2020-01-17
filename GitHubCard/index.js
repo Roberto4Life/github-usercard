@@ -3,6 +3,20 @@
            https://api.github.com/users/<your name>
 */
 
+axios.get("https://api.github.com/users/Roberto4Life")
+.then(response => {
+  console.log(response);
+  response.forEach(item =>{
+    const newCard = createPeopleCards(item);
+    cardFinal.append(newCard);
+
+  })
+  // response.append(createPeopleCards(response.data))
+  
+})
+.catch(error => {
+  console.log("the data was not returned", error)
+})
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +59,50 @@ const followersArray = [];
 </div>
 
 */
+
+function createPeopleCards(peopleArray){
+
+  const card = document.createElement('div');
+  const cardimg = document.createElement('img');
+  const cardinfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.classList.add('card');
+  cardimg.src = peopleArray.avatar_url;
+  cardinfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  name.textContent.add(`${name}`);
+  username.textContent.add(`${login}`);
+  location.textContent.add(`Location: ${peopleArray.location}`);
+  profile.textContent.add(`Profile: ${peopleArray.html_url}`);
+  followers.textContent.add(`Followers: ${peopleArray.followers}`);
+  following.textContent.add(`Following: ${peopleArray.following}`);
+  bio.textContent.add(`Bio: ${peopleArray.bio}`)
+
+  card.append(cardimg);
+  card.append(cardinfo);
+  cardinfo.append(name);
+  cardinfo.append(username);
+  cardinfo.append(location);
+  cardinfo.append(profile);
+  cardinfo.append(followers);
+  cardinfo.append(following);
+  cardinfo.append(bio);
+
+  return card;
+
+}
+
+const cardFinal = document.querySelector('.cards')
+
 
 /* List of LS Instructors Github username's: 
   tetondan
