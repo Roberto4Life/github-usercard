@@ -3,20 +3,15 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get("https://api.github.com/users/Roberto4Life")
-.then(response => {
-  console.log(response);
-  response.forEach(item =>{
-    const newCard = createPeopleCards(item);
-    cardFinal.append(newCard);
+// axios.get("https://api.github.com/users/Roberto4Life")
+// .then(response => {
+//   console.log(response);
+//   cardFinal.appendChild(createPeopleCards(response.data));
+// })
+// .catch(error => {
+//   console.log("the data was not returned", error)
+// })
 
-  })
-  // response.append(createPeopleCards(response.data))
-  
-})
-.catch(error => {
-  console.log("the data was not returned", error)
-})
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -37,6 +32,25 @@ axios.get("https://api.github.com/users/Roberto4Life")
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+
+axios.get("https://api.github.com/users/Roberto4Life/following")
+.then(response => {
+  console.log(response);
+  response.data.forEach(item =>{
+    const newCard = createPeopleCards(item);
+    cardFinal.append(newCard);
+  })
+  // cardFinal.appendChild(createPeopleCards(response.data));
+  
+  // Array.response(item => {
+  //   const arrayInfo = card(item);
+  //   cardFinal.append(arrayInfo);
+  // })
+  
+})
+.catch(error => {
+  console.log("the data was not returned", error)
+})
 
 const followersArray = [];
 
@@ -79,13 +93,13 @@ function createPeopleCards(peopleArray){
   name.classList.add('name');
   username.classList.add('username');
 
-  name.textContent.add(`${name}`);
-  username.textContent.add(`${login}`);
-  location.textContent.add(`Location: ${peopleArray.location}`);
-  profile.textContent.add(`Profile: ${peopleArray.html_url}`);
-  followers.textContent.add(`Followers: ${peopleArray.followers}`);
-  following.textContent.add(`Following: ${peopleArray.following}`);
-  bio.textContent.add(`Bio: ${peopleArray.bio}`)
+  name.textContent = (`${peopleArray.name}`);
+  username.textContent =(`${peopleArray.login}`);
+  location.textContent=(`Location: ${peopleArray.location}`);
+  profile.textContent=(`Profile: ${peopleArray.html_url}`);
+  followers.textContent=(`Followers: ${peopleArray.followers}`);
+  following.textContent=(`Following: ${peopleArray.following}`);
+  bio.textContent=(`Bio: ${peopleArray.bio}`)
 
   card.append(cardimg);
   card.append(cardinfo);
@@ -102,6 +116,10 @@ function createPeopleCards(peopleArray){
 }
 
 const cardFinal = document.querySelector('.cards')
+
+// axios.map(data => {
+//   cardFinal.append(peopleArray(data.response));
+// })
 
 
 /* List of LS Instructors Github username's: 
